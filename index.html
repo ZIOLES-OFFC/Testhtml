@@ -1,18 +1,23 @@
 <?php
 session_start();
 
-$valid_username = "admin";
-$valid_password = "password123";
+// === Konfigurasi ===
+$logo_url = "https://cdn.discordapp.com/attachments/1277595593472086089/1367432877490442301/new_logo.png?ex=6814909b&is=68133f1b&hm=143cd23775344cda01ae9b58704d7135b73de21f0f2a05be37aae30eccf080a8&"; // Ganti dengan link logo
+$background_url = "https://cdn.discordapp.com/attachments/1277595593472086089/1367432596107038772/qr_ID1024320271413_01.05.25_174607384_1746073846816.jpg?ex=68149058&is=68133ed8&hm=474ca4c738028ba13c43639b8e8bd5385f14fd18680a35720028317fb3990553&"; // Ganti dengan link background
+$redirect_url = "https://google.com"; // Ganti ke website tujuan setelah login
 
+$valid_username = "admin";
+$valid_password = "admin";
 $error = "";
 
+// === Proses login ===
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
     if ($username === $valid_username && $password === $valid_password) {
         $_SESSION['user'] = $username;
-        header("Location: dashboard.php");
+        header("Location: $redirect_url");
         exit();
     } else {
         $error = "Username atau password salah!";
@@ -26,11 +31,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Login - Alya Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-image: url('<?= $background_url ?>');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-purple-300 to-pink-300 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+<body class="min-h-screen flex items-center justify-center bg-gray-800 bg-opacity-70 backdrop-blur-sm">
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm bg-opacity-90">
         <div class="flex justify-center mb-6">
-            <img src="images/alya.png" alt="Logo Alya" class="w-20 h-20 rounded-full shadow-md">
+            <img src="<?= $logo_url ?>" alt="Logo Alya" class="w-20 h-20 rounded-full shadow-md object-cover">
         </div>
         <h2 class="text-center text-2xl font-semibold text-gray-700 mb-6">Login ke Alya Portal</h2>
 
